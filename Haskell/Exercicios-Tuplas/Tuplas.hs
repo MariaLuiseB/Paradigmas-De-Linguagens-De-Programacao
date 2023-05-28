@@ -22,15 +22,38 @@ second (_,b,_,_) = b
 
 
 maior :: Int -> Int -> Int -- função que retorna o maior entre dois inteiros
-maior x y 
-	| x > y = x
-	| otherwise = y 
+maior x y -- maior(int x, int y)
+	| x > y = x -- if (x > y) x = x
+	| otherwise = y -- else x = y 
 
+
+-----------------------------------Questão 1
 maiorIdade :: Int -> Int -- função que retorna a maior idade entre 10 pessoas
-maiorIdade x 
-    | x == 1 = second (pess x) -- caso base da recursão 
-    | otherwise = maior (second (pess x)) (maiorIdade (x-1)) -- recursão que retorna a maior idade entre as pessoas
+maiorIdade x -- maiorIdade (int x)
+    | x == 1 = second (pess x) -- if (x == 1) x = second(pess x)
+    | otherwise = maior (second (pess x)) (maiorIdade (x-1)) -- else (maior (second (pess x)))
 
-idadeMedia :: Int -> Float -- função que retorna a média de idade entre 10 pessoas
 
+-----------------------------------Questão 2
+idadeMedia :: Int -> Float -- função que retorna a média de idade entre x
+idadeMedia x = fromIntegral (somaIdades x) / fromIntegral x 
+    where
+        somaIdades :: Int -> Int
+        somaIdades id
+            | id == 1 = second (pess id)
+            | otherwise = idadeAtual + (somaIdades (id-1)) 
+            where
+                (_, idadeAtual,_,_) = pess id
+
+somaIdades :: Int -> Int -> Int
+somaIdades x y = 5 
+
+-----------------------------------Questão 3
+mascSup25 :: Int -> Int -- função que retorna o número de pessoas do sexo M com +25
+mascSup25 id 
+    | id == 0 = 0 -- se id == 0, retorna 0
+    | (idadeAtual > 25) && (sexo == 'M') = 1 + mascSup25(id - 1)
+    | otherwise = mascSup25(id - 1)
+    where 
+        (_,idadeAtual,_,sexo) = pess id -- retornar a idadeAtual e sexo
 
